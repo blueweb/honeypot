@@ -9,7 +9,7 @@
 		"antispam",
 		"spam"
 	],
-	"license": "New BSD",
+	"license": "BSD-3-Clause",
 	"authors": [
 		{
 			"name": "Martin Janeček",
