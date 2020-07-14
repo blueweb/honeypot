@@ -1,0 +1,31 @@
+{
+	"name": "blueweb/nette-honeypot",
+	"description": "Honeypot extension for Nette Forms",
+	"type": "library",
+	"keywords": [
+		"nette",
+		"forms",
+		"honeypot",
+		"antispam",
+		"spam"
+	],
+	"license": "New BSD",
+	"authors": [
+		{
+			"name": "Martin Janeček",
+			"email": "martin.janecek@polyweb.cz"
+		},
+		{
+			"name": "Dominik Gavrecký",
+			"email": "dominik@blueweb.sk"
+		}
+	],
+	"require": {
+		"nette/forms": "~2.3"
+	},
+	"autoload": {
+		"classmap": [
+			"src/"
+		]
+	}
+}
