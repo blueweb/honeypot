@@ -1,6 +1,6 @@
 <?php
 
-namespace blueweb\NetteHoneypot;
+namespace Blueweb\NetteHoneypot;
 
 
 use Nette\Forms\Container;

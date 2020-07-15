@@ -1,6 +1,6 @@
 <?php
 
-namespace blueweb\NetteHoneypot;
+namespace Blueweb\NetteHoneypot;
 
 
 use Nette\DI\CompilerExtension;
@@ -20,6 +20,6 @@ class HoneypotExtension extends CompilerExtension
 		$inline = strtoupper($config['inline']);
 
 		$initialize = $class->methods['initialize'];
-		$initialize->addBody('blueweb\NetteHoneypot\Honeypot::register(?);', [$inline]);
+		$initialize->addBody('Blueweb\NetteHoneypot\Honeypot::register(?);', [$inline]);
 	}
 }

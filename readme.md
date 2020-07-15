@@ -11,7 +11,7 @@ Best way to install this is using composer:
 Then register extension:
 	
 	extensions:
-        honeypot: blueweb\NetteHoneypot\HoneypotExtension
+        honeypot: Blueweb\NetteHoneypot\HoneypotExtension
         
 ## Usage
 
