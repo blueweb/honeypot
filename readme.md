@@ -6,7 +6,7 @@ Adds support for honeypot input in Nette Forms.
 
 Best way to install this is using composer:
 
-	composer require wodcz/nette-honeypot
+	composer require blueweb/nette-honeypot
 	
 Then register extension:
 	
