@@ -9,19 +9,21 @@
 		"antispam",
 		"spam"
 	],
-	"license": "BSD-3-Clause",
+	"license": "MIT",
 	"authors": [
 		{
-			"name": "Martin Janeček",
-			"email": "martin.janecek@polyweb.cz"
+			"name": "Martin Janeček"
 		},
 		{
-			"name": "Dominik Gavrecký",
-			"email": "dominik@blueweb.sk"
+			"name": "Dominik Gavrecký"
+		},
+		{
+			"name": "Milan Sedlák",
+			"email": "milan@blueweb.sk"
 		}
 	],
 	"require": {
-		"nette/forms": "~2.3"
+		"nette/forms": "~3.0"
 	},
 	"autoload": {
 		"classmap": [

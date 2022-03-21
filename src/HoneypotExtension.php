@@ -2,24 +2,25 @@
 
 namespace Blueweb\NetteHoneypot;
 
-
 use Nette\DI\CompilerExtension;
 use Nette\PhpGenerator\ClassType;
+use Nette\Schema\Expect;
+use Nette\Schema\Schema;
 
 class HoneypotExtension extends CompilerExtension
 {
-
-	protected $defaultConfig = [
-		"inline" => TRUE,
-	];
-
-	public
-	function afterCompile(ClassType $class)
+	public function getConfigSchema(): Schema
 	{
-		$config = $this->getConfig($this->defaultConfig);
-		$inline = strtoupper($config['inline']);
+		return Expect::structure([
+			'inline' => Expect::bool(TRUE),
+		]);
+	}
 
+	public function afterCompile(ClassType $class)
+	{
 		$initialize = $class->methods['initialize'];
-		$initialize->addBody('Blueweb\NetteHoneypot\Honeypot::register(?);', [$inline]);
+		$initialize->addBody('Blueweb\NetteHoneypot\Honeypot::register(?);', [
+			$this->config->inline,
+		]);
 	}
 }
