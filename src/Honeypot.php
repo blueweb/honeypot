@@ -2,28 +2,34 @@
 
 namespace Blueweb\NetteHoneypot;
 
-
 use Nette\Forms\Container;
 use Nette\Forms\Controls\BaseControl;
 use Nette\Utils\Html;
 
 class Honeypot extends BaseControl
 {
-
 	const MODE_CSS = "css";
 	const MODE_JS = "js";
 
+	/**
+	 * @var bool
+	 */
 	private $inline;
 
 	/**
 	 * @var string
 	 */
-	private $jsFile;
+	private $jsContent = <<<JS
+(function(){elems=document.body.querySelectorAll('.bw-additional-data');for(var i=0;i<elems.length;++i){var elem=elems[i];elem.setAttribute('style', 'display:none !important;')}})();
+JS;
+
 
 	/**
 	 * @var string
 	 */
-	private $cssFile;
+	private $cssContent = <<<CSS
+.bw-additional-data{display:none !important;}
+CSS;
 
 	/**
 	 * @var string
@@ -35,6 +41,9 @@ class Honeypot extends BaseControl
 	 */
 	private $message;
 
+	/**
+	 * @var array
+	 */
 	public $onError = [];
 
 	public function __construct($caption = NULL, $message = NULL, $mode = self::MODE_JS, $inline = TRUE)
@@ -45,13 +54,9 @@ class Honeypot extends BaseControl
 			$message = "Please, don't fill this field";
 		}
 
-		$this->inline = $inline;
-
 		$this->control->type = "text";
-
-		$this->cssFile = __DIR__ . '/assets/style.css';
-		$this->jsFile = __DIR__ . '/assets/script.js';
 		$this->mode = $mode;
+		$this->inline = $inline;
 		$this->message = $message;
 
 		$this->onError[] = function ($control) {
@@ -64,18 +69,22 @@ class Honeypot extends BaseControl
 		$control = parent::getControl();
 		$label = parent::getLabel();
 
-		$container = Html::el('div');
-		$container->id = $control->id . '-container';
-		$container->class = 'blueweb-additional_info';
+		$container = Html::el('div', [
+			'id'    => $control->id . '-container',
+			'class' => 'bw-additional-data',
+		]);
 		$container->addHtml($label);
 		$container->addHtml($control);
 
 		if ($this->inline) {
 			if ($this->mode == self::MODE_JS) {
-				$script = Html::el('script')->setType('text/javascript')->setHtml(file_get_contents($this->jsFile));
+				$script = Html::el('script')
+					->setType('text/javascript')
+					->setHtml($this->jsContent);
 				$container->addHtml($script);
 			} elseif ($this->mode == self::MODE_CSS) {
-				$style = Html::el('style')->setText(file_get_contents($this->cssFile));
+				$style = Html::el('style')
+					->setText($this->cssContent);
 				$container->addHtml($style);
 			}
 		}
@@ -88,7 +97,7 @@ class Honeypot extends BaseControl
 		return NULL;
 	}
 
-	public function validate()
+	public function validate(): void
 	{
 		parent::validate();
 
@@ -96,10 +105,9 @@ class Honeypot extends BaseControl
 		if (!empty($value)) {
 			$this->onError($this);
 		}
-
 	}
 
-	public static function register($inline = TRUE)
+	public static function register($inline = TRUE): void
 	{
 		Container::extensionMethod('addHoneypot', function ($container, $name, $caption = NULL, $message = NULL, $mode = self::MODE_JS) use ($inline) {
 			return $container[$name] = new self($caption, $message, $mode, $inline);
