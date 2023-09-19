@@ -6,6 +6,7 @@ use Nette\DI\CompilerExtension;
 use Nette\PhpGenerator\ClassType;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
+use Blueweb\NetteHoneypot\Honeypot;
 
 class HoneypotExtension extends CompilerExtension
 {
@@ -18,8 +19,7 @@ class HoneypotExtension extends CompilerExtension
 
 	public function afterCompile(ClassType $class)
 	{
-		$initialize = $class->methods['initialize'];
-		$initialize->addBody('Blueweb\NetteHoneypot\Honeypot::register(?);', [
+		$class->getMethod('initialize')->addBody('Honeypot::register(?);', [
 			$this->config->inline,
 		]);
 	}
