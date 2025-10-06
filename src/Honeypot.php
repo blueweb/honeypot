@@ -126,7 +126,7 @@ CSS;
 	 * @param string|null $nonce
 	 * @return self
 	 */
-	public function setNonce($nonce): self
+	public function setNonce($nonce)
 	{
 		$this->nonce = (string)$nonce;
 		return $this;
